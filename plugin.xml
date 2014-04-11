@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        id="me.habel.MyEstimotePlugin"
+        version="0.1">
+    <engines>
+        <engine name="cordova" version=">=3.0.0" />
+    </engines>
+    <name>My Estimote Plugin</name>
+    <description>Use the My Estimore Plugin to access iBeacons information in your Cordova/PhoneGap app.</description>
+    <author>Hugo Habel</author>
+    <keywords>iBeacons</keywords>
+    <license>Apache 2.0 License</license>
+    <js-module src="www/EstimoteBeacons.js" name="EstimoteBeacons">
+        <clobbers target="estimoteBeacons" />
+    </js-module>
+
+    <platform name="android">
+        <config-file target="res/xml/config.xml" parent="/*">
+            <feature name="PlotCordovaPlugin">
+                <param name="android-package" value="com.plotprojects.cordova.PlotCordovaPlugin" />
+            </feature>
+        </config-file>
+
+        <source-file src="src/android/EstimoteBeacons.java" target-dir="src/me/habel/MyEstimotePlugin"/>
+        <source-file src="src/android/estimote-sdk-preview.jar" target-dir="libs" framework="true"/>
+
+        <config-file target="AndroidManifest.xml" parent="/manifest">
+            <uses-permission android:name="android.permission.BLUETOOTH"/>
+            <uses-permission android:name="android.permission.BLUETOOTH_ADMIN"/>
+        </config-file>
+
+        <config-file target="AndroidManifest.xml" parent="/manifest/application">
+            <service android:name="com.estimote.sdk.service.BeaconService"
+                     android:exported="false">
+            </service>
+        </config-file>
+    </platform>
+    <info>Please see the plugin documentation for more information: </info>
+</plugin>
